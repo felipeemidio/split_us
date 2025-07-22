@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/shop_item.dart';
 import 'package:saporra/views/bill_detail/bill_detail_page_controller.dart';
 import 'package:saporra/views/bill_detail/views/members/members_view.dart';
 import 'package:saporra/views/bill_detail/views/cart_items/shop_view.dart';
@@ -29,8 +28,6 @@ class _BillDetailPageState extends State<BillDetailPage> {
     _pageViewController.dispose();
     super.dispose();
   }
-
-  List<ShopItem> cart = [];
 
   @override
   Widget build(BuildContext context) {
@@ -65,35 +62,39 @@ class _BillDetailPageState extends State<BillDetailPage> {
           ),
         ],
       ),
-      body: PageView(
-        controller: _pageViewController,
-        onPageChanged: (index) {
-          setState(() {
-            bottomNavIndex = index;
-          });
-        },
-        children: [
-          ShopView(
-            bill: widget.currentBill,
-            cart: cart,
-            members: [],
-            onAddItem: (newItem) {
-              setState(() {
-                cart.add(newItem);
-              });
-            },
-            onDeleteItem: (newItem) {
-              setState(() {
-                cart.remove(newItem);
-              });
-            },
-          ),
-          MembersView(
-            items: cart,
-            bill: widget.currentBill,
-          ),
-        ],
-      ),
+      body: ValueListenableBuilder(
+          valueListenable: _controller.items,
+          builder: (context, items, _) {
+            return PageView(
+              controller: _pageViewController,
+              onPageChanged: (index) {
+                setState(() {
+                  bottomNavIndex = index;
+                });
+              },
+              children: [
+                ShopView(
+                  bill: widget.currentBill,
+                  cart: items,
+                  members: [],
+                  onAddItem: (newItem) {
+                    setState(() {
+                      items.add(newItem);
+                    });
+                  },
+                  onDeleteItem: (newItem) {
+                    setState(() {
+                      items.remove(newItem);
+                    });
+                  },
+                ),
+                MembersView(
+                  items: items,
+                  bill: widget.currentBill,
+                ),
+              ],
+            );
+          }),
     );
   }
 }
