@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/consts/app_routes.dart';
 import 'package:saporra/core/utils/app_snackbar_utils.dart';
 import 'package:saporra/models/bill.dart';
 import 'package:saporra/models/member.dart';
@@ -34,8 +33,6 @@ class _MembersViewState extends State<MembersView> {
     return total;
   }
 
-  _getBillMembers() {}
-
   @override
   void initState() {
     super.initState();
@@ -52,22 +49,6 @@ class _MembersViewState extends State<MembersView> {
     } catch (e) {
       if (context.mounted) {
         String message = 'Houve um erro ao remover "${member.name}".';
-        AppSnackbarUtils.error(context, message: message);
-      }
-    }
-  }
-
-  Future<void> _onAddMembers(BuildContext context) async {
-    try {
-      final newMembers = await Navigator.of(context).pushNamed(AppRoutes.createMember);
-      if (context.mounted && newMembers != null && newMembers is List<Person> && newMembers.isNotEmpty) {
-        await controller.onAddMembers(widget.bill, newMembers);
-      }
-    } catch (e, st) {
-      print(e);
-      print(st);
-      if (context.mounted) {
-        String message = 'Houve um erro ao adicionar novos membros à comanda.';
         AppSnackbarUtils.error(context, message: message);
       }
     }
@@ -116,11 +97,6 @@ class _MembersViewState extends State<MembersView> {
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _onAddMembers(context),
-        tooltip: 'Adicionar membro',
-        child: const Icon(Icons.person_add_alt_1),
       ),
     );
   }
