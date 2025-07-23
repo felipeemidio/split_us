@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/utils/app_snackbar_utils.dart';
 import 'package:saporra/models/bill.dart';
 import 'package:saporra/models/member.dart';
 import 'package:saporra/models/shop_item.dart';
@@ -39,21 +38,6 @@ class _MembersViewState extends State<MembersView> {
     controller.initialize(widget.bill, widget.items);
   }
 
-  Future<void> _onDeleteMember(BuildContext context, Person member) async {
-    final memberAmount = _calcOwnedAmount(member);
-    if (memberAmount > 0) {
-      AppSnackbarUtils.error(context, message: 'Não é possivel remover um membro devedor.');
-    }
-    try {
-      await controller.onDeleteMember(widget.bill, member);
-    } catch (e) {
-      if (context.mounted) {
-        String message = 'Houve um erro ao remover "${member.name}".';
-        AppSnackbarUtils.error(context, message: message);
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +74,6 @@ class _MembersViewState extends State<MembersView> {
                   child: MemberCard(
                     member: member,
                     ownedAmount: _calcOwnedAmount(member),
-                    onDelete: () => _onDeleteMember(context, member),
                   ),
                 );
               },

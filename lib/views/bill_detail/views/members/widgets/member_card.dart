@@ -5,11 +5,9 @@ import 'package:saporra/models/member.dart';
 class MemberCard extends StatelessWidget {
   final Person member;
   final double ownedAmount;
-  final void Function() onDelete;
   const MemberCard({
     super.key,
     required this.member,
-    required this.onDelete,
     this.ownedAmount = 0,
   });
 
@@ -44,22 +42,11 @@ class MemberCard extends StatelessWidget {
           Text(
             ownedAmount.brl(),
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(width: 16),
-          SizedBox(
-            width: 20,
-            height: 20,
-            child: IconButton(
-              onPressed: onDelete,
-              padding: EdgeInsets.zero,
-              iconSize: 20,
-              color: Colors.red.shade700,
-              icon: const Icon(Icons.delete_outline),
-            ),
-          ),
+          const SizedBox(width: 8),
         ],
       ),
     );
