@@ -97,39 +97,44 @@ class _CreateItemPageState extends State<CreateItemPage> {
                         ValueListenableBuilder(
                           valueListenable: _controller.members,
                           builder: (context, members, _) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: _controller.members.value.length + 1,
-                              itemBuilder: (context, index) {
-                                if (index == 0) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(bottom: 12),
-                                    child: AddNewMemberButton(
-                                      onAddMember: (person) => _controller.getMembers(),
-                                    ),
-                                  );
-                                }
-                                final member = _controller.members.value[index - 1];
-                                final isCheck = _controller.currentMembers.value.contains(member);
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: CheckableMemberCard(
-                                    member: member,
-                                    check: isCheck,
-                                    onCheck: (value) {
-                                      if (noMemberError) {
-                                        noMemberError = false;
-                                      }
+                            return ValueListenableBuilder(
+                              valueListenable: _controller.currentMembers,
+                              builder: (context, currentMembers, _) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: members.length + 1,
+                                  itemBuilder: (context, index) {
+                                    if (index == 0) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(bottom: 12),
+                                        child: AddNewMemberButton(
+                                          onAddMember: _controller.onAddMember,
+                                        ),
+                                      );
+                                    }
+                                    final member = members[index - 1];
+                                    final isCheck = currentMembers.contains(member);
+                                    return Padding(
+                                      padding: const EdgeInsets.only(bottom: 12),
+                                      child: CheckableMemberCard(
+                                        member: member,
+                                        check: isCheck,
+                                        onCheck: (value) {
+                                          if (noMemberError) {
+                                            noMemberError = false;
+                                          }
 
-                                      if (isCheck) {
-                                        _controller.currentMembers.value.remove(member);
-                                      } else {
-                                        _controller.currentMembers.value.add(member);
-                                      }
-                                      setState(() {});
-                                    },
-                                  ),
+                                          if (isCheck) {
+                                            _controller.currentMembers.value.remove(member);
+                                          } else {
+                                            _controller.currentMembers.value.add(member);
+                                          }
+                                          setState(() {});
+                                        },
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                             );
