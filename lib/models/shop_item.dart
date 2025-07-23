@@ -42,7 +42,7 @@ class ShopItem {
       name: map['name'] as String,
       price: map['price'] as double,
       billId: map['billId'] as String,
-      payersIds: List<String>.from(map['payersIds'] as List<String>),
+      payersIds: List<String>.from(map['payersIds']),
     );
   }
 
