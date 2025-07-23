@@ -45,12 +45,14 @@ class CheckableMemberCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            Text(
-              member.name,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: check ? FontWeight.w500 : FontWeight.w400,
-                color: check ? Theme.of(context).primaryColor : null,
+            Expanded(
+              child: Text(
+                member.name,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: check ? FontWeight.w500 : FontWeight.w400,
+                  color: check ? Theme.of(context).primaryColor : null,
+                ),
               ),
             ),
           ],

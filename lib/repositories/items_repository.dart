@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:saporra/core/consts/app_local_storage_keys.dart';
 import 'package:saporra/core/errors/app_exception.dart';
+import 'package:saporra/models/bill.dart';
 import 'package:saporra/models/shop_item.dart';
 import 'package:saporra/services/local_storage_service.dart';
 
@@ -23,11 +24,17 @@ class ItemsRepository {
     }
 
     try {
-      return List.from(jsonDecode(value)).map((e) => ShopItem.fromMap(e)).toList();
+      final rawList = jsonDecode(value) as List;
+      return rawList.map((e) => ShopItem.fromMap(e)).toList();
     } catch (e) {
       print(e);
       rethrow;
     }
+  }
+
+  Future<List<ShopItem>> getAllByBill(Bill bill) async {
+    final items = await getAll();
+    return items.where((item) => item.billId == bill.id).toList();
   }
 
   Future<void> add(ShopItem item) async {

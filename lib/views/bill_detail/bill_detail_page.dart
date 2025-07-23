@@ -20,7 +20,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
   @override
   void initState() {
     super.initState();
-    _controller.getItems();
+    _controller.getItems(widget.currentBill);
   }
 
   @override
@@ -78,14 +78,10 @@ class _BillDetailPageState extends State<BillDetailPage> {
                   cart: items,
                   members: [],
                   onAddItem: (newItem) {
-                    setState(() {
-                      items.add(newItem);
-                    });
+                    _controller.addItem(newItem, widget.currentBill);
                   },
                   onDeleteItem: (newItem) {
-                    setState(() {
-                      items.remove(newItem);
-                    });
+                    _controller.removeItem(newItem, widget.currentBill);
                   },
                 ),
                 MembersView(
