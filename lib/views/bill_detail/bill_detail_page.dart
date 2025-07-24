@@ -76,7 +76,9 @@ class _BillDetailPageState extends State<BillDetailPage> {
                 ShopView(
                   bill: widget.currentBill,
                   cart: items,
-                  members: [],
+                  onEditItem: (newItem) {
+                    _controller.getItems(widget.currentBill);
+                  },
                   onAddItem: (newItem) {
                     _controller.addItem(newItem, widget.currentBill);
                   },

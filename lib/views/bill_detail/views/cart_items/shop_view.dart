@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:saporra/core/consts/app_routes.dart';
 import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/member.dart';
 import 'package:saporra/models/shop_item.dart';
 import 'package:saporra/views/bill_detail/views/cart_items/widgets/cart_item_card.dart';
 
 class ShopView extends StatelessWidget {
   final Bill bill;
   final List<ShopItem> cart;
-  final List<Person> members;
+  final void Function(ShopItem item) onEditItem;
   final void Function(ShopItem item) onAddItem;
   final void Function(ShopItem item) onDeleteItem;
   const ShopView({
     super.key,
     required this.bill,
     required this.cart,
-    required this.members,
+    required this.onEditItem,
     required this.onAddItem,
     required this.onDeleteItem,
   });
@@ -56,6 +55,15 @@ class ShopView extends StatelessWidget {
                   child: CartItemCard(
                     item: item,
                     onDelete: () => onDeleteItem(item),
+                    onTap: () async {
+                      final editedItem = await Navigator.of(context).pushNamed(
+                        AppRoutes.editItem,
+                        arguments: item,
+                      );
+                      if (editedItem is ShopItem) {
+                        onEditItem(editedItem);
+                      }
+                    },
                   ),
                 );
               },
@@ -65,21 +73,12 @@ class ShopView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // if (members.isEmpty) {
-          //   showWarningDialog(
-          //     context,
-          //     title: 'Não há membros!',
-          //     description: 'Inscreva membros para dividir a conta dos produtos.',
-          //   );
-          //   return;
-          // }
-
           final newItem = await Navigator.of(context).pushNamed(
             AppRoutes.createItem,
             arguments: bill,
           );
 
-          if (newItem != null && newItem is ShopItem) {
+          if (newItem is ShopItem) {
             onAddItem(newItem);
           }
         },
