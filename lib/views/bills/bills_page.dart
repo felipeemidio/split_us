@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:saporra/core/consts/app_local_storage_keys.dart';
+import 'package:saporra/core/consts/app_routes.dart';
 import 'package:saporra/services/local_storage_service.dart';
 import 'package:saporra/views/bills/bills_page_controller.dart';
 import 'package:saporra/views/bills/widgets/bill_card.dart';
@@ -40,6 +41,25 @@ class _BillsPageState extends State<BillsPage> {
         title: const Text('Comandas'),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (option) {
+              if (option == 'Gerenciar membros') {
+                Navigator.of(context).pushNamed(AppRoutes.createMember);
+              }
+            },
+            // surfaceTintColor: Colors.red,
+            color: Theme.of(context).colorScheme.primaryContainer,
+            itemBuilder: (BuildContext context) {
+              return {'Gerenciar membros', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewBill,
