@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/models/member.dart';
+import 'package:splitus/models/member.dart';
 
 class CheckableMemberCard extends StatelessWidget {
   final Person member;

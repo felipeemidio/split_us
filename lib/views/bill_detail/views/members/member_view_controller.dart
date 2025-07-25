@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:saporra/core/errors/app_exception.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/member.dart';
-import 'package:saporra/models/shop_item.dart';
-import 'package:saporra/repositories/bills_repository.dart';
-import 'package:saporra/repositories/members_repository.dart';
-import 'package:saporra/services/local_storage_service.dart';
+import 'package:splitus/core/errors/app_exception.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/models/member.dart';
+import 'package:splitus/models/shop_item.dart';
+import 'package:splitus/repositories/bills_repository.dart';
+import 'package:splitus/repositories/members_repository.dart';
+import 'package:splitus/services/local_storage_service.dart';
 
 class MemberViewController {
   final _billRepository = BillsRepository(LocalStorageService());

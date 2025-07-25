@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/consts/app_routes.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/shop_item.dart';
-import 'package:saporra/views/bill_detail/views/cart_items/widgets/cart_item_card.dart';
+import 'package:splitus/core/consts/app_routes.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/models/shop_item.dart';
+import 'package:splitus/views/bill_detail/views/cart_items/widgets/cart_item_card.dart';
 
 class ShopView extends StatelessWidget {
   final Bill bill;

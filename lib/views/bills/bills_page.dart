@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:saporra/core/consts/app_local_storage_keys.dart';
-import 'package:saporra/core/consts/app_routes.dart';
-import 'package:saporra/services/local_storage_service.dart';
-import 'package:saporra/views/bills/bills_page_controller.dart';
-import 'package:saporra/views/bills/widgets/bill_card.dart';
-import 'package:saporra/views/bills/widgets/create_bill_bottom_sheet.dart';
+import 'package:splitus/core/consts/app_local_storage_keys.dart';
+import 'package:splitus/core/consts/app_routes.dart';
+import 'package:splitus/services/local_storage_service.dart';
+import 'package:splitus/views/bills/bills_page_controller.dart';
+import 'package:splitus/views/bills/widgets/bill_card.dart';
+import 'package:splitus/views/bills/widgets/create_bill_bottom_sheet.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});

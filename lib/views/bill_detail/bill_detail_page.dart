@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/views/bill_detail/bill_detail_page_controller.dart';
-import 'package:saporra/views/bill_detail/views/members/members_view.dart';
-import 'package:saporra/views/bill_detail/views/cart_items/shop_view.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/views/bill_detail/bill_detail_page_controller.dart';
+import 'package:splitus/views/bill_detail/views/members/members_view.dart';
+import 'package:splitus/views/bill_detail/views/cart_items/shop_view.dart';
 
 class BillDetailPage extends StatefulWidget {
   final Bill currentBill;

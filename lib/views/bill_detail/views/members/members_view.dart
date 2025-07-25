@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/member.dart';
-import 'package:saporra/models/shop_item.dart';
-import 'package:saporra/views/bill_detail/views/members/member_view_controller.dart';
-import 'package:saporra/views/bill_detail/views/members/widgets/member_card.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/models/member.dart';
+import 'package:splitus/models/shop_item.dart';
+import 'package:splitus/views/bill_detail/views/members/member_view_controller.dart';
+import 'package:splitus/views/bill_detail/views/members/widgets/member_card.dart';
 
 class MembersView extends StatefulWidget {
   final Bill bill;
@@ -54,7 +54,7 @@ class _MembersViewState extends State<MembersView> {
                     Icon(Icons.person_off, size: 64),
                     SizedBox(height: 24),
                     Text(
-                      'Não há membros!\nColoque algém para pagar a conta!',
+                      'Ainda não há membros!\nAdicione itens e divida com os amigos para ver os membros desta comanda.',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.black54),
                     ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/field_validators.dart';
-import 'package:saporra/models/member.dart';
+import 'package:splitus/core/field_validators.dart';
+import 'package:splitus/models/member.dart';
 import 'package:uuid/uuid.dart';
 
 Future<Person?> showRegisterMemberBottomSheet(BuildContext context) async {

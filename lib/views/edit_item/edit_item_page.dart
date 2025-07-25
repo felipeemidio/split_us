@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/errors/app_exception.dart';
-import 'package:saporra/core/field_validators.dart';
-import 'package:saporra/core/formatters/currency_formatter.dart';
-import 'package:saporra/core/formatters/text_formatter.dart';
-import 'package:saporra/core/utils/app_snackbar_utils.dart';
-import 'package:saporra/models/shop_item.dart';
-import 'package:saporra/views/add_members/widgets/add_new_member_button.dart';
-import 'package:saporra/views/bill_detail/views/cart_items/widgets/checkable_member_card.dart';
-import 'package:saporra/views/edit_item/edit_item_page_controller.dart';
+import 'package:splitus/core/errors/app_exception.dart';
+import 'package:splitus/core/field_validators.dart';
+import 'package:splitus/core/formatters/currency_formatter.dart';
+import 'package:splitus/core/formatters/text_formatter.dart';
+import 'package:splitus/core/utils/app_snackbar_utils.dart';
+import 'package:splitus/models/shop_item.dart';
+import 'package:splitus/views/add_members/widgets/add_new_member_button.dart';
+import 'package:splitus/views/bill_detail/views/cart_items/widgets/checkable_member_card.dart';
+import 'package:splitus/views/edit_item/edit_item_page_controller.dart';
 
 class EditItemPage extends StatefulWidget {
   final ShopItem currentItem;

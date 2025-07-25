@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:saporra/core/consts/app_local_storage_keys.dart';
-import 'package:saporra/core/errors/app_exception.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/services/local_storage_service.dart';
+import 'package:splitus/core/consts/app_local_storage_keys.dart';
+import 'package:splitus/core/errors/app_exception.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/services/local_storage_service.dart';
 
 class BillsRepository {
   static const String _key = AppLocalStorageKeys.bills;

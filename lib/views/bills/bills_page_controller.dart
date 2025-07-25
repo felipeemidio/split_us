@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/repositories/bills_repository.dart';
-import 'package:saporra/services/local_storage_service.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/repositories/bills_repository.dart';
+import 'package:splitus/services/local_storage_service.dart';
 
 class BillsPageController {
   final _billRepository = BillsRepository(LocalStorageService());

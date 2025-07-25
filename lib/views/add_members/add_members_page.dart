@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/views/add_members/add_members_page_controller.dart';
-import 'package:saporra/views/add_members/widgets/add_new_member_button.dart';
-import 'package:saporra/views/add_members/widgets/person_card.dart';
-import 'package:saporra/widgets/warning_dialog.dart';
+import 'package:splitus/views/add_members/add_members_page_controller.dart';
+import 'package:splitus/views/add_members/widgets/add_new_member_button.dart';
+import 'package:splitus/views/add_members/widgets/person_card.dart';
+import 'package:splitus/widgets/warning_dialog.dart';
 
 class AddMembersPage extends StatefulWidget {
   const AddMembersPage({super.key});

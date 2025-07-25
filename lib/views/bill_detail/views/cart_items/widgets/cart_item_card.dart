@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/formatters/text_formatter.dart';
-import 'package:saporra/models/shop_item.dart';
+import 'package:splitus/core/formatters/text_formatter.dart';
+import 'package:splitus/models/shop_item.dart';
 
 class CartItemCard extends StatelessWidget {
   final ShopItem item;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/consts/app_routes.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/widgets/app_card.dart';
+import 'package:splitus/core/consts/app_routes.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/widgets/app_card.dart';
 
 class BillCard extends StatelessWidget {
   final Bill bill;

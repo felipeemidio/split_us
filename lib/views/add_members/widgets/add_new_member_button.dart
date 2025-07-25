@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/utils/app_snackbar_utils.dart';
-import 'package:saporra/models/member.dart';
-import 'package:saporra/views/add_members/widgets/add_new_member_button_controller.dart';
-import 'package:saporra/views/add_members/widgets/register_member_bottom_sheet.dart';
+import 'package:splitus/core/utils/app_snackbar_utils.dart';
+import 'package:splitus/models/member.dart';
+import 'package:splitus/views/add_members/widgets/add_new_member_button_controller.dart';
+import 'package:splitus/views/add_members/widgets/register_member_bottom_sheet.dart';
 
 class AddNewMemberButton extends StatefulWidget {
   final void Function(Person member) onAddMember;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/core/extensions/currency_extension.dart';
-import 'package:saporra/models/member.dart';
+import 'package:splitus/core/extensions/currency_extension.dart';
+import 'package:splitus/models/member.dart';
 
 class MemberCard extends StatelessWidget {
   final Person member;

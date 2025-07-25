@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:saporra/core/formatters/text_formatter.dart';
+import 'package:splitus/core/formatters/text_formatter.dart';
 
 class CurrencyInputFormatter extends TextInputFormatter {
   @override

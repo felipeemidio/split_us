@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:saporra/models/bill.dart';
+import 'package:splitus/models/bill.dart';
 import 'package:uuid/uuid.dart';
 
 Future<Bill?> showCreateBillBottomSheet(BuildContext context) async {

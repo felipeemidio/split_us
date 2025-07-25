@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:saporra/core/consts/app_routes.dart';
-import 'package:saporra/models/bill.dart';
-import 'package:saporra/models/shop_item.dart';
-import 'package:saporra/views/add_members/add_members_page.dart';
-import 'package:saporra/views/bill_detail/bill_detail_page.dart';
-import 'package:saporra/views/bills/bills_page.dart';
-import 'package:saporra/views/create_item/create_item_page.dart';
-import 'package:saporra/views/edit_item/edit_item_page.dart';
+import 'package:splitus/core/consts/app_routes.dart';
+import 'package:splitus/core/theme/colors.dart';
+import 'package:splitus/models/bill.dart';
+import 'package:splitus/models/shop_item.dart';
+import 'package:splitus/views/add_members/add_members_page.dart';
+import 'package:splitus/views/bill_detail/bill_detail_page.dart';
+import 'package:splitus/views/bills/bills_page.dart';
+import 'package:splitus/views/create_item/create_item_page.dart';
+import 'package:splitus/views/edit_item/edit_item_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,10 +27,10 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'App Sáporra',
+      title: 'SplitUs',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-        scaffoldBackgroundColor: Colors.amber.shade50,
+        colorScheme: AppColors.blueLightTheme,
         useMaterial3: true,
       ),
       initialRoute: AppRoutes.bills,
