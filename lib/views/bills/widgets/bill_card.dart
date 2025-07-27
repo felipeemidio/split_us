@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splitus/core/consts/app_routes.dart';
+import 'package:splitus/core/formatters/text_formatter.dart';
 import 'package:splitus/models/bill.dart';
 import 'package:splitus/widgets/app_card.dart';
 
@@ -37,7 +38,7 @@ class BillCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
-                bill.createdAt.toIso8601String(),
+                'Criado em: ${TextFormatter.dateToddMMyyyyHmm(bill.createdAt)}',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

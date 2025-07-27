@@ -72,7 +72,7 @@ class _BillsPageState extends State<BillsPage> {
       ),
       title: 'Comandas',
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ValueListenableBuilder(
           valueListenable: controller.bills,
           builder: (context, bills, child) {
@@ -99,7 +99,7 @@ class _BillsPageState extends State<BillsPage> {
             return ListView.builder(
               itemCount: bills.length,
               shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final bill = bills[index];

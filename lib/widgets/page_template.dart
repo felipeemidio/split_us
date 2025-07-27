@@ -1,89 +1,65 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
-class PageTemplate extends StatefulWidget {
+class PageTemplate extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final Widget body;
   final Widget? floatingActionButton;
+  final Widget? bottomNavigationBar;
+  final Widget? trailing;
   const PageTemplate({
     super.key,
     required this.title,
     required this.body,
+    this.subtitle,
     this.floatingActionButton,
+    this.bottomNavigationBar,
+    this.trailing,
   });
-
-  @override
-  State<PageTemplate> createState() => _PageTemplateState();
-}
-
-class _PageTemplateState extends State<PageTemplate> {
-  static const _kBasePadding = 16.0;
-  static const kExpandedHeight = 150.0;
-  final ValueNotifier<double> _titlePaddingNotifier = ValueNotifier(_kBasePadding);
-  final _scrollController = ScrollController();
-
-  double get _horizontalTitlePadding {
-    const kCollapsedPadding = 60.0;
-
-    if (_scrollController.hasClients) {
-      return math.min(_kBasePadding + kCollapsedPadding,
-          _kBasePadding + (kCollapsedPadding * _scrollController.offset) / (kExpandedHeight - kToolbarHeight));
-    }
-
-    return _kBasePadding;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (Navigator.of(context).canPop()) {
-      _scrollController.addListener(() {
-        _titlePaddingNotifier.value = _horizontalTitlePadding;
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _titlePaddingNotifier.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: widget.floatingActionButton,
-      body: NestedScrollView(
-        controller: _scrollController,
-        headerSliverBuilder: (context, innerBoxIsScrolled) {
-          return [
-            SliverAppBar(
-              pinned: true,
-              expandedHeight: kExpandedHeight,
-              elevation: 0,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              surfaceTintColor: Theme.of(context).colorScheme.surface,
-              flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.pin,
-                centerTitle: false,
-                expandedTitleScale: 1.5,
-                titlePadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-                title: ValueListenableBuilder(
-                  valueListenable: _titlePaddingNotifier,
-                  builder: (context, value, child) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: value),
-                      child: Text(widget.title),
-                    );
-                  },
+      floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar.large(
+            pinned: true,
+            elevation: 0,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            surfaceTintColor: Theme.of(context).colorScheme.surface,
+            title: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (subtitle != null)
+                        Text(
+                          subtitle!,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
+                if (trailing != null) trailing!,
+              ],
             ),
-          ];
-        },
-        body: widget.body,
+          ),
+          SliverToBoxAdapter(
+            child: body,
+          ),
+        ],
       ),
     );
   }

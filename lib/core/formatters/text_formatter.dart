@@ -24,4 +24,14 @@ abstract class TextFormatter {
 
     return numericValue / 100;
   }
+
+  static String dateToddMMyyyy(DateTime date) {
+    final formatter = DateFormat('dd/MM/yyyy');
+    return formatter.format(date);
+  }
+
+  static String dateToddMMyyyyHmm(DateTime date) {
+    final formatter = DateFormat('dd/MM/yyyy H:mm');
+    return formatter.format(date);
+  }
 }

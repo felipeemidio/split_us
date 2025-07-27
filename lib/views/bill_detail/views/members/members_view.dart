@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:splitus/core/formatters/text_formatter.dart';
 import 'package:splitus/models/bill.dart';
 import 'package:splitus/models/member.dart';
 import 'package:splitus/models/shop_item.dart';
 import 'package:splitus/views/bill_detail/views/members/member_view_controller.dart';
 import 'package:splitus/views/bill_detail/views/members/widgets/member_card.dart';
+import 'package:splitus/widgets/page_template.dart';
 
 class MembersView extends StatefulWidget {
   final Bill bill;
+  final double total;
   final List<ShopItem> items;
 
   const MembersView({
     super.key,
     required this.items,
     required this.bill,
+    this.total = 0,
   });
 
   @override
@@ -40,7 +44,10 @@ class _MembersViewState extends State<MembersView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PageTemplate(
+      title: widget.bill.name,
+      subtitle: "Membros",
+      trailing: Text(TextFormatter.currency(widget.total, 'R\$')),
       body: ValueListenableBuilder(
         valueListenable: controller.members,
         builder: (context, members, _) {
@@ -63,21 +70,21 @@ class _MembersViewState extends State<MembersView> {
               ),
             );
           }
-          return Padding(
+          return ListView.builder(
+            itemCount: members.length,
             padding: const EdgeInsets.all(16),
-            child: ListView.builder(
-              itemCount: members.length,
-              itemBuilder: (context, index) {
-                final member = members[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: MemberCard(
-                    member: member,
-                    ownedAmount: _calcOwnedAmount(member),
-                  ),
-                );
-              },
-            ),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final member = members[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: MemberCard(
+                  member: member,
+                  ownedAmount: _calcOwnedAmount(member),
+                ),
+              );
+            },
           );
         },
       ),

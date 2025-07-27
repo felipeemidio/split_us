@@ -32,13 +32,10 @@ class _BillDetailPageState extends State<BillDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.currentBill.name),
-        centerTitle: true,
-      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: bottomNavIndex,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
         onTap: (index) async {
           setState(() {
             bottomNavIndex = index;
@@ -63,36 +60,38 @@ class _BillDetailPageState extends State<BillDetailPage> {
         ],
       ),
       body: ValueListenableBuilder(
-          valueListenable: _controller.items,
-          builder: (context, items, _) {
-            return PageView(
-              controller: _pageViewController,
-              onPageChanged: (index) {
-                setState(() {
-                  bottomNavIndex = index;
-                });
-              },
-              children: [
-                ShopView(
-                  bill: widget.currentBill,
-                  cart: items,
-                  onEditItem: (newItem) {
-                    _controller.getItems(widget.currentBill);
-                  },
-                  onAddItem: (newItem) {
-                    _controller.addItem(newItem, widget.currentBill);
-                  },
-                  onDeleteItem: (newItem) {
-                    _controller.removeItem(newItem, widget.currentBill);
-                  },
-                ),
-                MembersView(
-                  items: items,
-                  bill: widget.currentBill,
-                ),
-              ],
-            );
-          }),
+        valueListenable: _controller.items,
+        builder: (context, items, _) {
+          return PageView(
+            controller: _pageViewController,
+            onPageChanged: (index) {
+              setState(() {
+                bottomNavIndex = index;
+              });
+            },
+            children: [
+              ShopView(
+                bill: widget.currentBill,
+                cart: items,
+                total: _controller.total,
+                onEditItem: (newItem) {
+                  _controller.getItems(widget.currentBill);
+                },
+                onAddItem: (newItem) {
+                  _controller.addItem(newItem, widget.currentBill);
+                },
+                onDeleteItem: (newItem) {
+                  _controller.removeItem(newItem, widget.currentBill);
+                },
+              ),
+              MembersView(
+                items: items,
+                bill: widget.currentBill,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

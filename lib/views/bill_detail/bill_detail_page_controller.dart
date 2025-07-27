@@ -8,6 +8,8 @@ class BillDetailPageController {
   final _itemsRepository = ItemsRepository(LocalStorageService());
   final items = ValueNotifier<List<ShopItem>>([]);
 
+  double get total => items.value.fold<double>(0, (sum, e) => sum + e.price);
+
   Future<void> getItems(Bill bill) async {
     items.value = await _itemsRepository.getAllByBill(bill);
   }
