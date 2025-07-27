@@ -26,11 +26,14 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    final themeColors = AppColors.blueLightTheme;
     return MaterialApp(
       title: 'SplitUs',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: AppColors.blueLightTheme,
+        colorScheme: themeColors,
+        scaffoldBackgroundColor: themeColors.surface,
         useMaterial3: true,
       ),
       initialRoute: AppRoutes.bills,

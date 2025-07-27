@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:splitus/core/consts/app_local_storage_keys.dart';
-import 'package:splitus/core/consts/app_routes.dart';
 import 'package:splitus/services/local_storage_service.dart';
 import 'package:splitus/views/bills/bills_page_controller.dart';
 import 'package:splitus/views/bills/widgets/bill_card.dart';
 import 'package:splitus/views/bills/widgets/create_bill_bottom_sheet.dart';
+import 'package:splitus/widgets/page_template.dart';
 
 class BillsPage extends StatefulWidget {
   const BillsPage({super.key});
@@ -16,6 +17,22 @@ class BillsPage extends StatefulWidget {
 }
 
 class _BillsPageState extends State<BillsPage> {
+  static const _kBasePadding = 16.0;
+  static const kExpandedHeight = 250.0;
+  final ValueNotifier<double> _titlePaddingNotifier = ValueNotifier(_kBasePadding);
+  final _scrollController = ScrollController();
+
+  double get _horizontalTitlePadding {
+    const kCollapsedPadding = 60.0;
+
+    if (_scrollController.hasClients) {
+      return min(_kBasePadding + kCollapsedPadding,
+          _kBasePadding + (kCollapsedPadding * _scrollController.offset) / (kExpandedHeight - kToolbarHeight));
+    }
+
+    return _kBasePadding;
+  }
+
   final controller = BillsPageController();
 
   _createNewBill() async {
@@ -32,42 +49,30 @@ class _BillsPageState extends State<BillsPage> {
   void initState() {
     super.initState();
     controller.initialize();
+
+    _scrollController.addListener(() {
+      _titlePaddingNotifier.value = _horizontalTitlePadding;
+    });
+  }
+
+  @override
+  void dispose() {
+    _titlePaddingNotifier.dispose();
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Comandas'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          PopupMenuButton<String>(
-            onSelected: (option) {
-              if (option == 'Gerenciar membros') {
-                Navigator.of(context).pushNamed(AppRoutes.createMember);
-              }
-            },
-            // surfaceTintColor: Colors.red,
-            color: Theme.of(context).colorScheme.primaryContainer,
-            itemBuilder: (BuildContext context) {
-              return {'Gerenciar membros', 'Settings'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-        ],
-      ),
+    return PageTemplate(
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewBill,
         tooltip: 'Criar uma nova comanda',
         child: const Icon(Icons.receipt_long_outlined),
       ),
+      title: 'Comandas',
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 24),
         child: ValueListenableBuilder(
           valueListenable: controller.bills,
           builder: (context, bills, child) {
@@ -93,11 +98,17 @@ class _BillsPageState extends State<BillsPage> {
 
             return ListView.builder(
               itemCount: bills.length,
+              shrinkWrap: true,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final bill = bills[index];
-                return BillCard(
-                  bill: bill,
-                  onDelete: () => controller.deleteBill(bill),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: BillCard(
+                    bill: bill,
+                    onDelete: () => controller.deleteBill(bill),
+                  ),
                 );
               },
             );

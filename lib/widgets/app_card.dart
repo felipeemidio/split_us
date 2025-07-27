@@ -14,12 +14,12 @@ class AppCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
             blurRadius: 2,
             spreadRadius: 1,
-            color: Colors.black26,
+            color: Theme.of(context).colorScheme.shadow,
           ),
         ],
       ),
