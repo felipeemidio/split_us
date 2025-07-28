@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:splitus/core/consts/app_local_storage_keys.dart';
-import 'package:splitus/services/local_storage_service.dart';
+import 'package:splitus/core/utils/app_snackbar_utils.dart';
 import 'package:splitus/views/bills/bills_page_controller.dart';
 import 'package:splitus/views/bills/widgets/bill_card.dart';
 import 'package:splitus/views/bills/widgets/create_bill_bottom_sheet.dart';
@@ -35,13 +33,13 @@ class _BillsPageState extends State<BillsPage> {
 
   final controller = BillsPageController();
 
-  _createNewBill() async {
+  _createNewBill(BuildContext context) async {
     final newBill = await showCreateBillBottomSheet(context);
     if (newBill != null) {
-      final newList = [...controller.bills.value, newBill];
-      final newRawList = newList.map((e) => e.toMap()).toList();
-      await LocalStorageService().write(AppLocalStorageKeys.bills, jsonEncode(newRawList));
-      controller.bills.value = newList;
+      await controller.createBill(newBill);
+      if (context.mounted) {
+        AppSnackbarUtils.info(context, message: "Nova conta criada com sucesso");
+      }
     }
   }
 
@@ -66,7 +64,7 @@ class _BillsPageState extends State<BillsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       floatingActionButton: FloatingActionButton(
-        onPressed: _createNewBill,
+        onPressed: () => _createNewBill(context),
         tooltip: 'Criar uma nova comanda',
         child: const Icon(Icons.receipt_long_outlined),
       ),

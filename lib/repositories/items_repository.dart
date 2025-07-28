@@ -55,6 +55,12 @@ class ItemsRepository {
     await _saveList(items);
   }
 
+  Future<void> removeBatch(List<ShopItem> items) async {
+    final storedItems = await getAll();
+    final filteredItems = storedItems.where((el) => !items.contains(el)).toList();
+    await _saveList(filteredItems);
+  }
+
   Future<void> edit(ShopItem item) async {
     final items = await getAll();
     final index = items.indexWhere((el) => el.id == item.id);
