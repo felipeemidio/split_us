@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:splitus/models/member.dart';
+import 'package:splitus/widgets/app_avatar_member_circle.dart';
 import 'package:splitus/widgets/app_card.dart';
 
 class PersonCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class PersonCard extends StatelessWidget {
     return AppCard(
       child: Row(
         children: [
-          const CircleAvatar(child: Icon(Icons.person)),
+          AppAvatarMemberCircle(member: person),
           const SizedBox(width: 16),
           Expanded(child: Text(person.name)),
           const SizedBox(width: 16),
