@@ -87,6 +87,7 @@ class _BillDetailPageState extends State<BillDetailPage> {
               MembersView(
                 items: items,
                 bill: widget.currentBill,
+                total: _controller.total,
               ),
             ],
           );
