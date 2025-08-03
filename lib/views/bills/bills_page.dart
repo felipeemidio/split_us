@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:splitus/core/app_env.dart';
 import 'package:splitus/core/utils/app_snackbar_utils.dart';
 import 'package:splitus/views/bills/bills_page_controller.dart';
 import 'package:splitus/views/bills/widgets/bill_card.dart';
@@ -19,6 +21,8 @@ class _BillsPageState extends State<BillsPage> {
   static const kExpandedHeight = 250.0;
   final ValueNotifier<double> _titlePaddingNotifier = ValueNotifier(_kBasePadding);
   final _scrollController = ScrollController();
+  late BannerAd _bannerAd;
+  bool _isAdLoaded = false;
 
   double get _horizontalTitlePadding {
     const kCollapsedPadding = 60.0;
@@ -47,10 +51,40 @@ class _BillsPageState extends State<BillsPage> {
   void initState() {
     super.initState();
     controller.initialize();
-
     _scrollController.addListener(() {
       _titlePaddingNotifier.value = _horizontalTitlePadding;
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initializeAd());
+  }
+
+  Future<void> _initializeAd() async {
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      MediaQuery.sizeOf(context).width.truncate(),
+    );
+    if (size == null) {
+      return;
+    }
+
+    _bannerAd = BannerAd(
+      size: size,
+      adUnitId: AppEnv.unitAdId,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          if (mounted) {
+            setState(() {
+              _isAdLoaded = true;
+            });
+          }
+        },
+        onAdFailedToLoad: (ad, error) {
+          print("AdError $error");
+        },
+      ),
+      request: const AdRequest(),
+    );
+
+    _bannerAd.load();
   }
 
   @override
@@ -88,6 +122,7 @@ class _BillsPageState extends State<BillsPage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 16, color: Colors.black54),
                       ),
+                      SizedBox(height: 32),
                     ],
                   ),
                 ),
@@ -95,11 +130,23 @@ class _BillsPageState extends State<BillsPage> {
             }
 
             return ListView.builder(
-              itemCount: bills.length,
+              itemCount: bills.length + 1,
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                if (index == bills.length) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: _isAdLoaded
+                        ? SizedBox(
+                            width: _bannerAd.size.width.toDouble(),
+                            height: _bannerAd.size.height.toDouble(),
+                            child: AdWidget(ad: _bannerAd),
+                          )
+                        : Container(),
+                  );
+                }
                 final bill = bills[index];
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
