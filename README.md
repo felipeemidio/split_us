@@ -1,16 +1,13 @@
-# splitus
+# SplitUs
 
-A new Flutter project.
+Friends are awsome and we want to share great moment with them, but money is a limted resource, so also share the bill with them.
 
-## Getting Started
+Easy to use and with a clean design, SplitUs is the way to share it.
 
-This project is a starting point for a Flutter application.
+# Contributing
 
-A few resources to get you started if this is your first Flutter project:
+Fork the project and open a Pull Request.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# License
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This project follow the MIT license.
