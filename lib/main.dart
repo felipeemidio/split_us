@@ -14,8 +14,9 @@ import 'package:splitus/views/edit_item/edit_item_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
   await AppEnv.load();
+  await MobileAds.instance.initialize();
+
   // LocalStorageService().clear();
 
   runApp(const MyApp());
