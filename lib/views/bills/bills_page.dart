@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:splitus/core/app_env.dart';
+import 'package:splitus/core/consts/app_routes.dart';
 import 'package:splitus/core/utils/app_snackbar_utils.dart';
 import 'package:splitus/views/bills/bills_page_controller.dart';
 import 'package:splitus/views/bills/widgets/bill_card.dart';
@@ -97,12 +98,18 @@ class _BillsPageState extends State<BillsPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
+      title: 'Comandas',
+      actions: [
+        IconButton(
+          onPressed: () => Navigator.of(context).pushNamed(AppRoutes.createMember),
+          icon: const Icon(Icons.person_add),
+        ),
+      ],
       floatingActionButton: FloatingActionButton(
         onPressed: () => _createNewBill(context),
         tooltip: 'Criar uma nova comanda',
         child: const Icon(Icons.receipt_long_outlined),
       ),
-      title: 'Comandas',
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ValueListenableBuilder(

@@ -7,6 +7,7 @@ class PageTemplate extends StatelessWidget {
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Widget? trailing;
+  final List<Widget>? actions;
   const PageTemplate({
     super.key,
     required this.title,
@@ -15,6 +16,7 @@ class PageTemplate extends StatelessWidget {
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.trailing,
+    this.actions,
   });
 
   @override
@@ -27,6 +29,7 @@ class PageTemplate extends StatelessWidget {
           SliverAppBar.large(
             pinned: true,
             elevation: 0,
+            actions: actions,
             backgroundColor: Theme.of(context).colorScheme.surface,
             surfaceTintColor: Theme.of(context).colorScheme.surface,
             title: Row(
