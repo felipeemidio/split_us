@@ -4,12 +4,14 @@ class ShopItem {
   final String id;
   final String name;
   final double price;
+  final int quantity;
   final String billId;
   final List<String> payersIds;
   const ShopItem({
     required this.id,
     required this.name,
     required this.price,
+    required this.quantity,
     required this.billId,
     required this.payersIds,
   });
@@ -31,6 +33,7 @@ class ShopItem {
       'id': id,
       'name': name,
       'price': price,
+      'quantity': quantity,
       'billId': billId,
       'payersIds': payersIds,
     };
@@ -41,6 +44,7 @@ class ShopItem {
       id: map['id'] as String,
       name: map['name'] as String,
       price: map['price'] as double,
+      quantity: (map['quantity'] as int?) ?? 1,
       billId: map['billId'] as String,
       payersIds: List<String>.from(map['payersIds']),
     );

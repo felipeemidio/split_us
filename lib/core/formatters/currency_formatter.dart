@@ -17,3 +17,18 @@ class CurrencyInputFormatter extends TextInputFormatter {
     );
   }
 }
+
+class IntegerInputFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.selection.baseOffset == 0) {
+      return newValue;
+    }
+    final digits = TextFormatter.onlyDigits(newValue.text);
+
+    return newValue.copyWith(
+      text: digits,
+      selection: TextSelection.collapsed(offset: digits.length),
+    );
+  }
+}

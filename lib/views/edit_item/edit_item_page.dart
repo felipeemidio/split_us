@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:splitus/core/errors/app_exception.dart';
 import 'package:splitus/core/field_validators.dart';
 import 'package:splitus/core/formatters/currency_formatter.dart';
@@ -21,6 +22,7 @@ class _EditItemPageState extends State<EditItemPage> {
   final _formKey = GlobalKey<FormState>();
   final _controller = EditItemPageController();
   final _nameFieldController = TextEditingController();
+  final _quantityFieldController = TextEditingController();
   final _priceFieldController = TextEditingController();
   bool noMemberError = false;
 
@@ -29,12 +31,14 @@ class _EditItemPageState extends State<EditItemPage> {
     super.initState();
     _controller.loadInitialData(widget.currentItem);
     _nameFieldController.text = widget.currentItem.name;
+    _quantityFieldController.text = widget.currentItem.quantity.toString();
     _priceFieldController.text = TextFormatter.currency(widget.currentItem.price, '');
   }
 
   @override
   void dispose() {
     _nameFieldController.dispose();
+    _quantityFieldController.dispose();
     _priceFieldController.dispose();
     super.dispose();
   }
@@ -52,6 +56,7 @@ class _EditItemPageState extends State<EditItemPage> {
         name: _nameFieldController.text.trim(),
         price: TextFormatter.currencyToValue(_priceFieldController.text.trim()),
         billId: widget.currentItem.billId,
+        quantity: int.tryParse(_quantityFieldController.text.trim()) ?? 1,
         payersIds: _controller.currentMembers.value.map((member) => member.id).toList(),
       );
 
@@ -100,9 +105,73 @@ class _EditItemPageState extends State<EditItemPage> {
                           validator: FieldValidators.isRequired(),
                         ),
                         const SizedBox(height: 16),
+                        ValueListenableBuilder(
+                          valueListenable: _quantityFieldController,
+                          builder: (context, textValue, child) {
+                            final value = int.tryParse(_quantityFieldController.text) ?? 0;
+                            return Row(
+                              children: [
+                                GestureDetector(
+                                  onTap:
+                                      value > 1 ? () => _quantityFieldController.text = (value - 1).toString() : null,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: value > 1
+                                          ? Theme.of(context).colorScheme.primaryContainer
+                                          : Theme.of(context).disabledColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Icon(Icons.remove,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary
+                                            .withValues(alpha: value > 1 ? 1 : 0.5)),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                SizedBox(
+                                  width: 80,
+                                  child: TextFormField(
+                                    controller: _quantityFieldController,
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      label: Text('Qtde'),
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    maxLength: 3,
+                                    buildCounter: (context,
+                                            {required currentLength, required isFocused, required maxLength}) =>
+                                        null,
+                                    validator: FieldValidators.isRequired(),
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                GestureDetector(
+                                  onTap: () {
+                                    _quantityFieldController.text = (value + 1).toString();
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 16),
                         TextFormField(
                           controller: _priceFieldController,
                           keyboardType: TextInputType.number,
+                          maxLength: 10,
+                          buildCounter: (context, {required currentLength, required isFocused, required maxLength}) =>
+                              null,
                           decoration: const InputDecoration(
                             label: Text('Valor'),
                             border: OutlineInputBorder(),
@@ -111,6 +180,36 @@ class _EditItemPageState extends State<EditItemPage> {
                           validator: FieldValidators.isRequired(),
                           inputFormatters: [
                             CurrencyInputFormatter(),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            const Text(
+                              "TOTAL",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            ValueListenableBuilder(
+                                valueListenable: _quantityFieldController,
+                                builder: (context, quantity, child) {
+                                  return ValueListenableBuilder(
+                                      valueListenable: _priceFieldController,
+                                      builder: (context, price, child) {
+                                        final total = TextFormatter.currencyToValue(price.text.trim()) *
+                                            (int.tryParse(quantity.text.trim()) ?? 1);
+                                        return Text(
+                                          'R\$ ${TextFormatter.currency(total, '')} ',
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
+                                      });
+                                }),
                           ],
                         ),
                         const SizedBox(height: 16),
